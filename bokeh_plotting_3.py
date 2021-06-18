@@ -159,10 +159,11 @@ controls = [select_start_date,
 			min_dte,
 			max_dte,
 			x_axis, 
-			y_axis]
+			y_axis,
+	    		alpha_slider]
 
 inputs = column(controls, width = 200)
-ctrl_plot = column(p, alpha_slider, sizing_mode="scale_both")
+ctrl_plot = column(p, sizing_mode="scale_both")
 
 l = row(inputs, ctrl_plot)
 
