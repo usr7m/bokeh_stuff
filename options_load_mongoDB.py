@@ -61,10 +61,10 @@ class db_lookup():
 		return result
 	def get_opts_df(self):
 		query = list(
-					self.look_up(
-						collection = self.symbol + '_options'
-						)
+				self.look_up(
+					collection = self.symbol + '_options'
 					)
+				)
 		opts_dict_list = []
 		for day in range(len(query)):
 			on_date = dict(list(query)[day])
@@ -81,10 +81,10 @@ class db_lookup():
 		self.opts_df = pd.DataFrame(opts_dict_list, index = idx)
 	def get_quotes_df(self):
 		query = list(
-					self.look_up(
-						collection = self.symbol + '_quotes'
-						)
+				self.look_up(
+					collection = self.symbol + '_quotes'
 					)
+				)
 		quotes_dict = []
 		for i in range(len(query)):
 			quote = dict(list(query)[i])
@@ -95,10 +95,10 @@ class db_lookup():
 		self.quotes_df = pd.DataFrame(quotes_dict, index = idx)
 	def get_fundamentals_df(self):
 		query = list(
-					self.look_up(
-						collection = self.symbol + '_fundamental'
-						)
+				self.look_up(
+					collection = self.symbol + '_fundamental'
 					)
+				)
 		funds_dict = []
 		for i in range(len(query)):
 			fund = dict(list(query)[i])
@@ -145,7 +145,3 @@ def strike_bracket(opt_df, n):
 					df_c.reset_index(drop = True, inplace = True)
 					bracket_df = bracket_df.append(df_c[:n])
 	return bracket_df
-
-
-# opts_df[
-# 	(opts_df['inTheMoney'] == False)]
