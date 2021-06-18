@@ -109,11 +109,11 @@ class db_lookup():
 		self.funds_df = pd.DataFrame(funds_dict, index = idx)
 	def combine_df(self):
 		combined_df = self.opts_df.merge(self.quotes_df, 
-											on = 'datetime',
-											suffixes = ['_opt', '_qt'])
+						on = 'datetime',
+						suffixes = ['_opt', '_qt'])
 		combined_df = combined_df.merge(self.funds_df, 
-											on = 'datetime',
-											suffixes = ['_qt', '_fnd'])
+						on = 'datetime',
+						suffixes = ['_qt', '_fnd'])
 		self.combined_df = combined_df
 
 
