@@ -240,4 +240,4 @@ curdoc().title = "plots"
 
 curdoc()
 
-show(l)
+
