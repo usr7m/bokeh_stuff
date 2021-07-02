@@ -18,11 +18,11 @@ class mdb_cli():
 		self.port = port
 		self.auth_db = auth_db
 		self.connection = 'mongodb://%s:%s@%s:%s/%s' \
-						% (self.user, 
-							self.pwd, 
-							self.host, 
-							self.port,
-							self.auth_db)
+			% (	self.user, 
+				self.pwd, 
+				self.host, 
+				self.port,
+				self.auth_db)
 	def connect(self, db):
 		self.db = db
 		self.connection = MongoClient(self.connection)
@@ -31,10 +31,10 @@ class mdb_cli():
 
 mdb = mdb_cli()
 mdb.auth(user = 'usr', 
-			pwd = 'pwd',
-			host = 'localhost', 
-			port = '27017',
-			auth_db = 'db')
+	pwd = 'pwd',
+	host = 'localhost', 
+	port = '27017',
+	auth_db = 'db')
 mdb.connect(db = 'db')
 mdb.client
 
@@ -61,17 +61,16 @@ class db_lookup():
 		)
 		return result
 	def get_hist_df(self):
-		query = \
-			self.look_up(
+		query = self.look_up(
 				collection = self.symbol + '_historical'
 				)
 		self.hist_df = pd.DataFrame(query)
 	def get_opts_df(self):
-		query = list(
-					self.look_up(
-						collection = self.symbol + '_options'
-						)
+		query = list(\
+				self.look_up(
+					collection = self.symbol + '_options'
 					)
+				)
 		opts_dict_list = []
 		for day in range(len(query)):
 			on_date = dict(list(query)[day])
@@ -94,11 +93,11 @@ class db_lookup():
 			 self.opts_df['strikePrice'] / self.opts_df['underlyingMark']
 			 )
 	def get_quotes_df(self):
-		query = list(
-					self.look_up(
-						collection = self.symbol + '_quotes'
-						)
+		query = list(\
+				self.look_up(
+					collection = self.symbol + '_quotes'
 					)
+				)
 		quotes_dict = []
 		for i in range(len(query)):
 			quote = dict(list(query)[i])
@@ -108,11 +107,11 @@ class db_lookup():
 		idx = list(range(len(quotes_dict)))
 		self.quotes_df = pd.DataFrame(quotes_dict, index = idx)
 	def get_fundamentals_df(self):
-		query = list(
-					self.look_up(
-						collection = self.symbol + '_fundamental'
-						)
+		query = list(\
+				self.look_up(
+					collection = self.symbol + '_fundamental'
 					)
+				)
 		funds_dict = []
 		for i in range(len(query)):
 			fund = dict(list(query)[i])
@@ -123,17 +122,12 @@ class db_lookup():
 		self.funds_df = pd.DataFrame(funds_dict, index = idx)
 	def combine_df(self):
 		combined_df = self.opts_df.merge(self.quotes_df, 
-											on = 'datetime',
-											suffixes = ['_opt', '_qt'])
+						on = 'datetime',
+						suffixes = ['_opt', '_qt'])
 		combined_df = combined_df.merge(self.funds_df, 
-											on = 'datetime',
-											suffixes = ['_qt', '_fnd'])
+						on = 'datetime',
+						suffixes = ['_qt', '_fnd'])
 		self.combined_df = combined_df
-
-
-
-# l = db_lookup('SPY')
-# l.get_opts_df()
 
 
 def get_combined_df(symbol = 'SPY', start_date = start_date, end_date = end_date):
