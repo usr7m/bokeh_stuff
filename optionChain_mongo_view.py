@@ -125,11 +125,11 @@ button.on_click(update)
 
 
 set_1 = row(\
-			plot_1,
-			column(
-				ticker_text, button
-				)
+		plot_1,
+		column(
+			ticker_text, button
 			)
+		)
 
 
 
@@ -150,8 +150,8 @@ plot_2.scatter(\
 			)
 
 y_axis_opts = Select(\
-				title="Y Axis", options = [], value="volatility", width = width_2_1
-				)
+			title="Y Axis", options = [], value="volatility", width = width_2_1
+			)
 
 def change_Y_axis(attr, old, new):
 	source_opts.data['y'] = df[y_axis_opts.value]
@@ -160,8 +160,8 @@ y_axis_opts.on_change('value', change_Y_axis)
 
 
 alpha_slider = Slider(\
-					title = 'Alpha', start = 0, end = 100, value = 50, width = width_2_1
-					)
+			title = 'Alpha', start = 0, end = 100, value = 50, width = width_2_1
+			)
 
 def change_alpha(attr, old, new):
 	source_opts.data['alpha'] = [new/100] * len(df['datetime'])
@@ -173,12 +173,12 @@ alpha_slider.on_change('value', change_alpha)
 
 
 set_2 = row(\
-			plot_2,
-			column(\
-				y_axis_opts,
-				alpha_slider
-				)
+		plot_2,
+		column(\
+			y_axis_opts,
+			alpha_slider
 			)
+		)
 
 
 
@@ -194,17 +194,17 @@ source_daily_1 = ColumnDataSource(\
 	)
 
 label = Label(\
-				x = 10, y = 10,
-				text=str(''), text_font_size='24px', text_color='#eeeeee'
-				)
+		x = 10, y = 10,
+		text=str(''), text_font_size='24px', text_color='#eeeeee'
+		)
 
 plot_3_1 = figure(\
-			title = '3_1', plot_height = 600, plot_width = 800, 	
-			)
+		title = '3_1', plot_height = 600, plot_width = 800, 	
+		)
 plot_3_1.scatter(\
-			x = 'x_1', y = 'y_1', source = source_daily_1, 
-			alpha = 'alpha_1', color = 'red', size = 5
-			)
+		x = 'x_1', y = 'y_1', source = source_daily_1, 
+		alpha = 'alpha_1', color = 'red', size = 5
+		)
 plot_3_1.add_layout(label)
 
 
@@ -215,28 +215,28 @@ plot_3_1.add_layout(label)
 width_3_1 = 150
 
 date_selector_1 = Select(\
-				title = 'title', options = [], value = '', width = width_3_1
-				)
+			title = 'title', options = [], value = '', width = width_3_1
+			)
 
 										# axis controls
 
 x_axis_daily_1 = Select(\
-				title="X Axis", options = [], value="strikePrice", width = width_3_1 
-				)
+			title="X Axis", options = [], value="strikePrice", width = width_3_1 
+			)
 y_axis_daily_1 = Select(\
-				title="Y Axis", options = [], value="netChange", width = width_3_1
-				)
+			title="Y Axis", options = [], value="netChange", width = width_3_1
+			)
 
 										# dte controls
 
 min_dte_1 = Slider(\
-				title = 'DTE min limit', 
-				start = 0, end = 1000, value = 0, width = width_3_1
-				)
+			title = 'DTE min limit', 
+			start = 0, end = 1000, value = 0, width = width_3_1
+			)
 max_dte_1 = Slider(\
-				title = 'DTE max limit', 
-				start = 1, end = 1000, value = 1000, width = width_3_1
-				)
+			title = 'DTE max limit', 
+			start = 1, end = 1000, value = 1000, width = width_3_1
+			)
 								
 										# LOG_DIFF control
 
@@ -272,10 +272,10 @@ def update_daily(attr, old, new):
 	plot_3_1.xaxis.axis_label = x_axis_daily_1.value
 	plot_3_1.yaxis.axis_label = y_axis_daily_1.value
 	df_s = df_s[\
-			(df_s['daysToExpiration'] >= min_dte_1.value) &
-			(df_s['daysToExpiration'] <= max_dte_1.value) &
-			(abs(df_s['log_diff']) <= ctrl_log_diff_1.value)
-			]
+		(df_s['daysToExpiration'] >= min_dte_1.value) &
+		(df_s['daysToExpiration'] <= max_dte_1.value) &
+		(abs(df_s['log_diff']) <= ctrl_log_diff_1.value)
+		]
 	df_s.reset_index(drop = True, inplace = True)
 	source_daily_1.data = dict(
 		x_1 = df_s[x_axis_daily_1.value],
@@ -295,17 +295,17 @@ for control in [date_selector_1, x_axis_daily_1, y_axis_daily_1,
 
 
 set_3 = row(\
-			plot_3_1,
-			column(
-				date_selector_1,
-				x_axis_daily_1,
-				y_axis_daily_1,
-				min_dte_1,
-				max_dte_1,
-				ctrl_log_diff_1,
-				alpha_slider_1
-				)
+		plot_3_1,
+		column(
+			date_selector_1,
+			x_axis_daily_1,
+			y_axis_daily_1,
+			min_dte_1,
+			max_dte_1,
+			ctrl_log_diff_1,
+			alpha_slider_1
 			)
+		)
 
 
 layout = column(set_1, set_2, set_3)
